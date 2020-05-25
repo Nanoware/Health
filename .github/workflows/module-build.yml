@@ -47,7 +47,7 @@ jobs:
       - name: Build module JAR
         run: ./gradlew :modules:${{ github.event.repository.name }}:jar
       - name: Tests
-        run: ./gradlew :modules:${{ github.event.repository.name }}:test -Dtest.ignoreFailures=false --fail-fast --rerun-task
+        run: ./gradlew :modules:${{ github.event.repository.name }}:test -Dtest.ignoreFailures=false --fail-fast --rerun-tasks
       - name: Static Code Analysis
         run: ./gradlew :modules:${{ github.event.repository.name }}:check --exclude-task test
         continue-on-error: true
