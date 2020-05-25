@@ -47,10 +47,13 @@ jobs:
       - name: Build module JAR
         run: ./gradlew :modules:${{ github.event.repository.name }}:jar
       - name: Tests
-        run: ./gradlew :modules:${{ github.event.repository.name }}:test -Dtest.ignoreFailures=false --fail-fast --rerun-tasks --console=plain
-      - name: report.ci
-        run: python < $(curl https://report.ci/report.py)
-        shell: bash
+        run: ./gradlew :modules:${{ github.event.repository.name }}:test --fail-fast --rerun-tasks --console=plain
+      - name: check-run-reporter
+        uses: check-run-reporter/action@master
+        env:
+          CHECK_RUN_REPORTER_LABEL: 'Unit Tests'
+          CHECK_RUN_REPORTER_REPORT: 'modules/${{ github.event.repository.name }}/build/test-results/test/*.xml'
+          CHECK_RUN_REPORTER_TOKEN: ${{ secrets.CHECK_RUN_REPORTER_TOKEN }}
       - name: Static Code Analysis
         run: ./gradlew :modules:${{ github.event.repository.name }}:check --exclude-task test
         continue-on-error: true
