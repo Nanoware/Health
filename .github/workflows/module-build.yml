@@ -40,8 +40,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
-      - name: Refresh Module Build Files
-        run: ./groovyw module refresh
+      #- name: Refresh Module Build Files
+      #  run: ./groovyw module refresh
+      - name: Copy build.gradle
+        run: cp ./templates/build.gradle modules/${{ github.event.repository.name }}/build.gradle
       - name: Build module JAR
         run: ./gradlew :modules:${{ github.event.repository.name }}:jar
       - name: Tests
